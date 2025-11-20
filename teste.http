@@ -1,0 +1,9 @@
+POST http://localhost:3333/sinistros
+Content-Type: application/json
+
+{
+  "clienteId": "user_123",
+  "tipo": "COLISAO",
+  "descricao": "Bati o carro no poste da esquina",
+  "dataOcorrido": "2023-11-20T14:30:00Z"
+}
