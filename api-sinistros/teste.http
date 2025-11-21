@@ -30,7 +30,23 @@ Content-Type: application/json
 < ./package.json
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### ---------------------------------------------------
 ### 3. LISTAR TUDO (Para ver se salvou)
-### ---------------------------------------------------
+
 GET {{baseUrl}}/sinistros
+
+
+### 4. (ANALISTA) ATUALIZAR STATUS
+PATCH {{baseUrl}}/sinistros/{{sinistroId}}/status
+Content-Type: application/json
+
+{
+  "status": "EM_ANALISE"
+}
+
+### 5. TENTAR UM STATUS INVÁLIDO (Teste de erro)
+PATCH {{baseUrl}}/sinistros/{{sinistroId}}/status
+Content-Type: application/json
+
+{
+  "status": "STATUS_QUE_NAO_EXISTE"
+}

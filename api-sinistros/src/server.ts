@@ -61,11 +61,9 @@ app.post('/sinistros/:id/upload', async (request, reply) => {
 
   const nomeArquivo = `${Date.now()}-${data.filename}`;
   
-  // Resolve o caminho absoluto para evitar erros de pasta
   const pastaUploads = path.resolve(__dirname, '../uploads');
   const caminhoSalvar = path.join(pastaUploads, nomeArquivo);
 
-  // Garante que a pasta existe antes de salvar
   if (!fs.existsSync(pastaUploads)){
       fs.mkdirSync(pastaUploads);
   }
@@ -83,6 +81,43 @@ app.post('/sinistros/:id/upload', async (request, reply) => {
   });
 
   return reply.status(201).send({ message: "Upload feito!", url: urlDaImagem });
+});
+
+app.patch('/sinistros/:id/status', async (request, reply) => {
+  const paramsSchema = z.object({ id: z.string() });
+  const { id } = paramsSchema.parse(request.params);
+
+  const bodySchema = z.object({
+    status: z.enum(['ABERTO', 'EM_ANALISE', 'APROVADO', 'REJEITADO', 'CONCLUIDO'])
+  });
+  
+  const validacao = bodySchema.safeParse(request.body);
+
+  if (!validacao.success) {
+    return reply.status(400).send({ 
+      message: "Status inválido. Use apenas: ABERTO, EM_ANALISE, APROVADO, REJEITADO, CONCLUIDO",
+      erro: validacao.error.format() 
+    });
+  }
+
+  const { status } = validacao.data;
+
+  // 3. Verificar se o sinistro existe
+  const sinistroExiste = await prisma.sinistro.findUnique({ where: { id } });
+  if (!sinistroExiste) {
+    return reply.status(404).send({ message: "Sinistro não encontrado." });
+  }
+
+  // 4. Atualizar no Banco
+  const sinistroAtualizado = await prisma.sinistro.update({
+    where: { id },
+    data: { status }
+  });
+
+  return reply.send({ 
+    message: "Status atualizado com sucesso!", 
+    novoStatus: sinistroAtualizado.status 
+  });
 });
 
 const start = async () => {
