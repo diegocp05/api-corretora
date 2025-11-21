@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:3333
+
+
+### 1. CRIAR UM NOVO SINISTRO
+
+# @name criarSinistro
+POST {{baseUrl}}/sinistros
+Content-Type: application/json
+
+{
+  "clienteId": "diego_http_client",
+  "tipo": "ROUBO",
+  "descricao": "Teste usando arquivo HTTP direto do VS Code",
+  "dataOcorrido": "2023-12-01T08:00:00Z"
+}
+
+
+### 2. FAZER UPLOAD DE EVIDÊNCIA (FOTO/DOC)
+
+@sinistroId = {{criarSinistro.response.body.sinistroId}}
+
+POST {{baseUrl}}/sinistros/{{sinistroId}}/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="meu-teste.json"
+Content-Type: application/json
+
+
+< ./package.json
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### ---------------------------------------------------
+### 3. LISTAR TUDO (Para ver se salvou)
+### ---------------------------------------------------
+GET {{baseUrl}}/sinistros

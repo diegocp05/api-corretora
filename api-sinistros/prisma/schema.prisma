@@ -11,13 +11,30 @@ datasource db {
 model Sinistro {
   id           String   @id @default(uuid())
   clienteId    String
-  tipo         String   // Ex: "ROUBO", "COLISAO"
-  status       String   @default("ABERTO") // Ex: "ABERTO", "EM_ANALISE"
+  tipo         String
+  status       String   @default("ABERTO")
   descricao    String
   dataOcorrido DateTime
 
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
-  @@map("sinistros") // Nome da tabela no banco
+  // 1. Adicione esta linha para criar a relação
+  evidencias   Evidencia[]
+
+  @@map("sinistros")
+}
+
+// 2. Adicione este novo model no final
+model Evidencia {
+  id          String   @id @default(uuid())
+  sinistroId  String
+  url         String   // Onde o arquivo está salvo (ex: link do S3 ou pasta local)
+  tipoArquivo String   // "image/png", "application/pdf"
+  criadoEm    DateTime @default(now())
+
+  // Relacionamento (Foreign Key)
+  sinistro    Sinistro @relation(fields: [sinistroId], references: [id])
+
+  @@map("evidencias")
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Upload - Seguradora</title>
+    <style> body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; } input, button { display: block; margin: 10px 0; padding: 10px; width: 100%; } </style>
+</head>
+<body>
+    <h2>1. Criar Sinistro</h2>
+    <button onclick="criarSinistro()">Criar Sinistro de Teste</button>
+    <p id="statusSinistro">Aguardando...</p>
+
+    <hr>
+
+    <h2>2. Enviar Foto (Evidência)</h2>
+    <input type="text" id="sinistroId" placeholder="ID do Sinistro (Cole aqui)" />
+    <input type="file" id="fotoInput" />
+    <button onclick="enviarFoto()">Enviar Foto</button>
+    <div id="resultado"></div>
+
+    <script>
+        async function criarSinistro() {
+            const res = await fetch('http://localhost:3333/sinistros', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    clienteId: "diego_browser",
+                    tipo: "COLISAO",
+                    descricao: "Teste via HTML",
+                    dataOcorrido: new Date().toISOString()
+                })
+            });
+            const data = await res.json();
+            document.getElementById('statusSinistro').innerText = "Criado! ID: " + data.sinistroId;
+            document.getElementById('sinistroId').value = data.sinistroId;
+        }
+
+        async function enviarFoto() {
+            const id = document.getElementById('sinistroId').value;
+            const file = document.getElementById('fotoInput').files[0];
+            
+            if (!id || !file) return alert("Precisa do ID e da Foto!");
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const res = await fetch(`http://localhost:3333/sinistros/${id}/upload`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+            if(res.ok) {
+                document.getElementById('resultado').innerHTML = 
+                    `<p>Sucesso!</p><img src="${data.url}" style="max-width: 100%; border: 2px solid green;">`;
+            } else {
+                alert("Erro: " + JSON.stringify(data));
+            }
+        }
+    </script>
+</body>
+</html>
