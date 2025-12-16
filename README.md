@@ -1,10 +1,10 @@
 <h1 align="center"> Insurtech - API de Sinistros </h1>
 
 <p align="center">
-<img src="https://img.shields.io/github/issues/diegocp05/api-sinistros"/>
-<img src="https://img.shields.io/github/forks/diegocp05/api-sinistros"/>
-<img src="https://img.shields.io/github/stars/diegocp05/api-sinistros"/>
-<img src="https://img.shields.io/github/license/diegocp05/api-sinistros"/>
+<img src="https://img.shields.io/github/issues/diegocp05/api-corretora"/>
+<img src="https://img.shields.io/github/forks/diegocp05/api-corretora"/>
+<img src="https://img.shields.io/github/stars/diegocp05/api-corretora"/>
+<img src="https://img.shields.io/github/license/diegocp05/api-corretora"/>
 </p>
 
 <p align="center">Uma API RESTful robusta e performática desenvolvida para modernizar o setor de seguros automotivos. Com foco na gestão completa do ciclo de vida de um sinistro, a aplicação gerencia desde a abertura do chamado pelo cliente até a análise de evidências (upload de imagens) e aprovação final pelo corretor.</p>
@@ -65,3 +65,4 @@ fetch("http://localhost:3333/sinistros/UUID-DO-SINISTRO/upload", {
 })
 .then(response => response.json())
 .then(data => console.log(data));
+
