@@ -159,32 +159,42 @@ aprovarSinistro('uuid-do-sinistro-aqui');
 - Uploads: Fastify Multipart + Streams
 --- 
 
-📚 Como Executar Localmente
-Clone o repositório
-
-
+##📚 Como Executar Localmente
+**Clone o repositório**
+```bash
 git clone [https://github.com/diegocp05/api-sinistros.git](https://github.com/diegocp05/api-sinistros.git)
 cd api-sinistros
-Suba o Banco de Dados (Docker)
+```
 
-
+**Suba o Banco de Dados (Docker)**
+```bash
 docker-compose up -d
-Instale as dependências e configure o Banco
+```
 
+**Instale as dependências e configure o Banco**
+```bash
 npm install
 npx prisma generate
 npx prisma migrate dev
-Alimente o banco com dados de teste (Seed)
-
+```
+**Alimente o banco com dados de teste (Seed)**
+```bash
 npx prisma db seed
+```
+
 # Isso criará 3 sinistros fictícios automaticamente
-Inicie o servidor
-
+**Inicie o servidor**
+```bash
 npm run dev
-A documentação interativa estará disponível em http://localhost:3333/docs
+```
+**A documentação interativa estará disponível em http://localhost:3333/docs**
 
-🚀 Autor
+## 🚀 Autor
+ 
 <sub>@diegocp05</sub>
 
-<p align="center"> Feito com ❤️ por <a href="https://github.com/diegocp05">Diego Costa</a> </p>
+<p align="center">
+  Feito com ❤️ por <a href="https://github.com/diegocp05">Diego Costa</a>
+</p>
+
 
