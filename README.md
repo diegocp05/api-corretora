@@ -177,10 +177,6 @@ npm install
 npx prisma generate
 npx prisma migrate dev
 ```
-**Alimente o banco com dados de teste (Seed)**
-```bash
-npx prisma db seed
-```
 
 **Inicie o servidor**
 ```bash
@@ -195,6 +191,7 @@ npm run dev
 <p align="center">
   Feito com ❤️ por <a href="https://github.com/diegocp05">Diego Costa</a>
 </p>
+
 
 
 
