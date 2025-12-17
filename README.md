@@ -66,3 +66,32 @@ fetch("http://localhost:3333/sinistros/UUID-DO-SINISTRO/upload", {
 .then(response => response.json())
 .then(data => console.log(data));
 
+---
+
+### 🔄 Fluxo de Análise
+
+**Atualizar Status do Sinistro** `PATCH /sinistros/:id/status`  
+Permite ao analista alterar o status para `EM_ANALISE`, `APROVADO`, `REJEITADO` ou `CONCLUIDO`.
+
+---
+
+### 📄 Formato de Resposta (`GET /sinistros`)
+
+```json
+[
+  {
+    "id": "6b9f3390-6295-4767-8093-855d009cb6f9",
+    "clienteId": "diego.costa@email.com",
+    "tipo": "COLISAO",
+    "status": "ABERTO",
+    "descricao": "Bati na traseira de um Honda Civic no semáforo.",
+    "dataOcorrido": "2025-12-16T14:30:00.000Z",
+    "evidencias": [
+      {
+        "id": "evidencia-uuid-123",
+        "url": "http://localhost:3333/uploads/173450000-foto.png",
+        "tipoArquivo": "image/png"
+      }
+    ]
+  }
+]
