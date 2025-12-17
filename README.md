@@ -65,7 +65,7 @@ fetch("http://localhost:3333/sinistros/UUID-DO-SINISTRO/upload", {
 })
 .then(response => response.json())
 .then(data => console.log(data));
-
+```
 ---
 
 ### 🔄 Fluxo de Análise
@@ -95,3 +95,96 @@ Permite ao analista alterar o status para `EM_ANALISE`, `APROVADO`, `REJEITADO` 
     ]
   }
 ]
+```
+
+---
+
+### 🌟 Exemplos de Uso Completos
+```javascript
+async function abrirSinistro() {
+  try {
+    const response = await fetch('http://localhost:3333/sinistros', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        clienteId: "maria.silva@email.com",
+        tipo: "ROUBO",
+        descricao: "Levaram meu carro na porta de casa",
+        dataOcorrido: new Date().toISOString()
+      })
+    });
+    
+    const data = await response.json();
+    console.log(`Sinistro criado! ID: ${data.sinistroId}`);
+    return data;
+  } catch (error) {
+    console.error('Erro ao abrir sinistro:', error);
+  }
+}
+
+// Uso
+abrirSinistro();
+```
+
+---
+
+### Analisar e Aprovar Sinistro
+```javascript
+async function aprovarSinistro(idSinistro) {
+  try {
+    const response = await fetch(`http://localhost:3333/sinistros/${idSinistro}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: "APROVADO" })
+    });
+    
+    const resultado = await response.json();
+    console.log(`Novo status: ${resultado.novoStatus}`);
+  } catch (error) {
+    console.error('Erro na análise:', error);
+  }
+}
+
+// Uso
+aprovarSinistro('uuid-do-sinistro-aqui');
+```
+---
+### 🔧 Tecnologias Utilizadas
+- Runtime: Node.js + TypeScript (TSX)
+- Framework: Fastify
+- Banco de Dados: PostgreSQL (via Docker)
+- ORM: Prisma
+- Validação: Zod
+- Documentação: Swagger (OpenAPI 3.0)
+- Uploads: Fastify Multipart + Streams
+--- 
+
+📚 Como Executar Localmente
+Clone o repositório
+
+
+git clone [https://github.com/diegocp05/api-sinistros.git](https://github.com/diegocp05/api-sinistros.git)
+cd api-sinistros
+Suba o Banco de Dados (Docker)
+
+
+docker-compose up -d
+Instale as dependências e configure o Banco
+
+npm install
+npx prisma generate
+npx prisma migrate dev
+Alimente o banco com dados de teste (Seed)
+
+npx prisma db seed
+# Isso criará 3 sinistros fictícios automaticamente
+Inicie o servidor
+
+npm run dev
+A documentação interativa estará disponível em http://localhost:3333/docs
+
+🚀 Autor
+<sub>@diegocp05</sub>
+
+<p align="center"> Feito com ❤️ por <a href="https://github.com/diegocp05">Diego Costa</a> </p>
+
