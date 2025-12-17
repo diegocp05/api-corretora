@@ -182,7 +182,6 @@ npx prisma migrate dev
 npx prisma db seed
 ```
 
-# Isso criará 3 sinistros fictícios automaticamente
 **Inicie o servidor**
 ```bash
 npm run dev
@@ -196,5 +195,6 @@ npm run dev
 <p align="center">
   Feito com ❤️ por <a href="https://github.com/diegocp05">Diego Costa</a>
 </p>
+
 
 
